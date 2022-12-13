@@ -102,50 +102,6 @@ def Deletedata(request):
                 print("executed")
                 return render(request, 'home.html')
 
-def Preddddiction(request):
-        if request.method == "POST":
-                model_new = tf.keras.models.load_model("savedmodel/bestmodel.hdf5")
-                imagesname = os.listdir("media")
-                imagespath = []
-                result_output = []
-                for  i in range(len(imagesname)):
-                        imagespath.append("media/" + str(imagesname[i])  )
-                        #print(imagespath)
-                for i in range(len(imagespath)):
-                        test_image = image.load_img( imagespath[i] , target_size = (28, 28, 3))  #for skin_cancer_classifer.hdf5 use 100x100 size
-                        test_image = image.img_to_array(test_image)
-                        test_image = np.expand_dims(test_image , axis = 0)
-                        result = model_new.predict(test_image)
-                        print(result)
-                        if result[0][0]:
-                                result_output.append(str(imagesname[i]) + "   " +   "Actinic keratoses (akiec)")
-                                #print( str(imagesname[i]) + "     Actinic keratoses (akiec)")
-                        elif result[0][1]:
-                                result_output.append(str(imagesname[i]) + "   " +  " Basal cell carcinoma (bcc)")
-                                #print( str(imagesname[i]) +  " Basal cell carcinoma (bcc)")
-                        elif result[0][2]:
-                                result_output.append(str(imagesname[i]) + "   " +  " Benign keratosis-like lesions (bkl)")
-                                #print(  str(imagesname[i]) +  " Benign keratosis-like lesions (bkl)")        
-                        elif result[0][3]:
-                                result_output.append( str(imagesname[i]) +  "   " + " Dermatofibroma (df)")
-                                #print(  str(imagesname[i]) +  " Dermatofibroma (df)")
-                        elif result[0][4]:
-                                result_output.append(str(imagesname[i]) +  "   " + " Melanoma (mel)")
-                                #print( str(imagesname[i]) + " Melanoma (mel)")
-                        elif result[0][5]:
-                                result_output.append(str(imagesname[i]) + "   " + " Melanocytic nevi (nv)")
-                                #print( str(imagesname[i]) + " Melanocytic nevi (nv)")
-                        elif result[0][6]:
-                                result_output.append(str(imagesname[i]) + "   " + " Vascular lesions (vas)")
-                                #print(  str(imagesname[i]) + " Vascular lesions (vas)")
-                        context = {"prediction" : result_output }
-
-
-
-
-                
-                
-                return render(request, 'prediction.html' , context)
         
 
 
